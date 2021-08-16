@@ -5,18 +5,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/zhangshanwen/the_one/code"
-	"github.com/zhangshanwen/the_one/initialize/db"
-	"github.com/zhangshanwen/the_one/initialize/service"
-	"github.com/zhangshanwen/the_one/internal/header"
-	"github.com/zhangshanwen/the_one/tools"
+	"github.com/zhangshanwen/splie/code"
+	"github.com/zhangshanwen/splie/initialize/db"
+	"github.com/zhangshanwen/splie/initialize/service"
+	"github.com/zhangshanwen/splie/internal/header"
+	"github.com/zhangshanwen/splie/tools"
 )
 
-func Handel(fun func(c *service.Context) service.Res) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		service.Json(c, fun(&service.Context{Context: c}))
-	}
-}
 func verifyJwt(c *gin.Context) (res service.Res, claims *tools.Claims) {
 	h := header.Authorization{}
 	if res.Err = c.ShouldBindHeader(&h); res.Err != nil {

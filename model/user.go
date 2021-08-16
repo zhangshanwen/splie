@@ -6,12 +6,11 @@ import (
 
 type User struct {
 	BaseModel
-	Mobile   string  `json:"mobile"`
-	NickName string  `json:"nick_name"`
-	Password string  `json:"-"`
-	Email    string  `json:"email"`
-	Avatar   string  `json:"avatar"`
-	Wallet   *Wallet `gorm:"foreignkey:Uid;rerences:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Mobile   string `json:"mobile"`
+	NickName string `json:"nick_name"`
+	Password string `json:"-"`
+	Email    string `json:"email"`
+	Avatar   string `json:"avatar"`
 }
 
 func (user *User) SetPassword(password string) error {

@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"io"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -20,14 +21,12 @@ func InitLog() {
 	Logger.SetFormatter(&log.TextFormatter{
 		ForceColors: true,
 	})
-	//
-	Logger.SetOutput(os.Stdout)
-	// 输出到文件
-	Logger.SetOutput(&lumberjack.Logger{
+	mw := io.MultiWriter(os.Stdout, &lumberjack.Logger{
 		Filename:   "log/the_one.log",
 		MaxSize:    1024, // megabytes
 		MaxBackups: 10,
 		MaxAge:     7, // days
 	})
+	Logger.SetOutput(mw)
 	InitGinLogger()
 }

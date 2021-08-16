@@ -8,7 +8,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 
-	l "github.com/zhangshanwen/the_one/initialize/logger"
+	l "github.com/zhangshanwen/splie/initialize/logger"
 )
 
 var (

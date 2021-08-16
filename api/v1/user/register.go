@@ -6,12 +6,12 @@ import (
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 
-	"github.com/zhangshanwen/the_one/code"
-	"github.com/zhangshanwen/the_one/initialize/db"
-	"github.com/zhangshanwen/the_one/initialize/service"
-	"github.com/zhangshanwen/the_one/internal/param"
-	"github.com/zhangshanwen/the_one/internal/response"
-	"github.com/zhangshanwen/the_one/model"
+	"github.com/zhangshanwen/splie/code"
+	"github.com/zhangshanwen/splie/initialize/db"
+	"github.com/zhangshanwen/splie/initialize/service"
+	"github.com/zhangshanwen/splie/internal/param"
+	"github.com/zhangshanwen/splie/internal/response"
+	"github.com/zhangshanwen/splie/model"
 )
 
 func Register(c *service.Context) (resp service.Res) {
@@ -31,24 +31,28 @@ func Register(c *service.Context) (resp service.Res) {
 		}
 	}()
 	if resp.Err = g.Where(&user).First(&user).Error; resp.Err != nil && resp.Err != gorm.ErrRecordNotFound {
+		resp.ResCode = code.DbError
 		return
 	}
 	if user.Id > 0 {
 		resp.Err = errors.New("mobile is existed")
-		resp.ResCode = code.MobileIsExistEd
+		resp.ResCode = code.MobileIsExist
 		return
 	}
 	if resp.Err = copier.Copy(&user, &p); resp.Err != nil {
 		return
 	}
 	if resp.Err = user.SetPassword(p.Password); resp.Err != nil {
+		resp.ResCode = code.SetPasswordField
 		return
 	}
-	if resp.Err = g.Save(&user).Error; resp.Err != nil {
+	if resp.Err = g.Create(&user).Error; resp.Err != nil {
+		resp.ResCode = code.DbError
 		return
 	}
 	r := response.UserInfo{}
 	if resp.Err = copier.Copy(&r, &user); resp.Err != nil {
+		resp.ResCode = code.CopyParamError
 		return
 	}
 	resp.Data = r

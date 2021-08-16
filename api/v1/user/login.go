@@ -3,13 +3,13 @@ package user
 import (
 	"github.com/jinzhu/copier"
 
-	"github.com/zhangshanwen/the_one/code"
-	"github.com/zhangshanwen/the_one/initialize/db"
-	"github.com/zhangshanwen/the_one/initialize/service"
-	"github.com/zhangshanwen/the_one/internal/param"
-	"github.com/zhangshanwen/the_one/internal/response"
-	"github.com/zhangshanwen/the_one/model"
-	"github.com/zhangshanwen/the_one/tools"
+	"github.com/zhangshanwen/splie/code"
+	"github.com/zhangshanwen/splie/initialize/db"
+	"github.com/zhangshanwen/splie/initialize/service"
+	"github.com/zhangshanwen/splie/internal/param"
+	"github.com/zhangshanwen/splie/internal/response"
+	"github.com/zhangshanwen/splie/model"
+	"github.com/zhangshanwen/splie/tools"
 )
 
 func Login(c *service.Context) (resp service.Res) {
@@ -20,7 +20,8 @@ func Login(c *service.Context) (resp service.Res) {
 	}
 	user := model.User{Mobile: p.Mobile}
 	g := db.G
-	if resp.Err = g.Where(&user).Preload("Wallet").First(&user).Error; resp.Err != nil {
+	if resp.Err = g.Where(&user).First(&user).Error; resp.Err != nil {
+		resp.ResCode = code.DbError
 		return
 	}
 	if !user.CheckPassword(p.Password) {
@@ -28,20 +29,15 @@ func Login(c *service.Context) (resp service.Res) {
 	}
 	r := response.UserInfo{}
 	if resp.Err = copier.Copy(&r, &user); resp.Err != nil {
+		resp.ResCode = code.CopyParamError
 		return
 	}
 	var token string
 	token, resp.Err = tools.CreateToken(user.Id)
 	if resp.Err != nil {
+		resp.ResCode = code.CreateTokenFailed
 		return
 	}
-	if user.Wallet == nil {
-		user.Wallet = &model.Wallet{Uid: user.Id}
-		if resp.Err = g.Create(&user.Wallet).Error; resp.Err != nil {
-			return
-		}
-	}
-	r.Balance = user.Wallet.Balance
 	r.Authorization = token
 	resp.Data = r
 	return

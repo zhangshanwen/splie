@@ -1,4 +1,4 @@
-module github.com/zhangshanwen/the_one
+module github.com/zhangshanwen/splie
 
 go 1.16
 
@@ -10,8 +10,11 @@ require (
 	github.com/jinzhu/copier v0.3.2
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.8.1
-	go.uber.org/zap v1.17.0
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+	github.com/zhangshanwen/plug v0.0.5
+	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2
+	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d // indirect
+	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
+	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gorm.io/driver/mysql v1.1.1
 	gorm.io/gorm v1.21.11

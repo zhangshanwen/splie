@@ -3,8 +3,8 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 
-	l "github.com/zhangshanwen/the_one/initialize/logger"
-	"github.com/zhangshanwen/the_one/model"
+	l "github.com/zhangshanwen/splie/initialize/logger"
+	"github.com/zhangshanwen/splie/model"
 )
 
 type Context struct {

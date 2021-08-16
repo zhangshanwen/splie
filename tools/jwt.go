@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/zhangshanwen/the_one/initialize/conf"
-	l "github.com/zhangshanwen/the_one/initialize/logger"
+	"github.com/zhangshanwen/splie/initialize/conf"
+	l "github.com/zhangshanwen/splie/initialize/logger"
 )
 
 var (

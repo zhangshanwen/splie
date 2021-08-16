@@ -10,9 +10,9 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
-	"github.com/zhangshanwen/the_one/initialize/conf"
-	l "github.com/zhangshanwen/the_one/initialize/logger"
-	"github.com/zhangshanwen/the_one/model"
+	"github.com/zhangshanwen/splie/initialize/conf"
+	l "github.com/zhangshanwen/splie/initialize/logger"
+	"github.com/zhangshanwen/splie/model"
 )
 
 var G *gorm.DB
@@ -22,7 +22,7 @@ func InitMysql() {
 	var err error
 	m := conf.C.DB.Mysql
 	newLogger := logger.New(
-		log.New(l.Logger.Writer(), "\r\n", log.LstdFlags), // io writer
+		log.New(l.Logger.Out, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
 			SlowThreshold:             time.Second, // Slow SQL threshold
 			LogLevel:                  logger.Info, // Log level
@@ -41,12 +41,15 @@ func InitMysql() {
 	}); err != nil {
 		panic(err)
 	}
+	G.Callback().Query().Before("gorm:query").Register("my_plugin:is_delete", func(db *gorm.DB) {
+		db.Where("is_deleted=?", false)
+	})
 	l.Logger.Info("--------init_mysql_client_end---------")
 	AutoMigrate()
 	return
 }
 func AutoMigrate() {
 	l.Logger.Info("--------mysql_auto_migrate_start---------")
-	_ = G.AutoMigrate(model.User{}, model.Wallet{})
+	_ = G.AutoMigrate(model.User{}, model.Images{}, model.Server{})
 	l.Logger.Info("--------mysql_auto_migrate_end---------")
 }

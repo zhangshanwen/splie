@@ -3,9 +3,9 @@ package router
 import (
 	"fmt"
 
-	"github.com/zhangshanwen/the_one/initialize/app"
-	"github.com/zhangshanwen/the_one/initialize/conf"
-	"github.com/zhangshanwen/the_one/router/api"
+	"github.com/zhangshanwen/splie/initialize/app"
+	"github.com/zhangshanwen/splie/initialize/conf"
+	"github.com/zhangshanwen/splie/router/api"
 )
 
 func InitRouter() {

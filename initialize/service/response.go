@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/zhangshanwen/the_one/code"
-	l "github.com/zhangshanwen/the_one/initialize/logger"
+	"github.com/zhangshanwen/splie/code"
+	l "github.com/zhangshanwen/splie/initialize/logger"
 )
 
 type Res struct {
@@ -54,7 +54,7 @@ func Json(c *gin.Context, r Res) {
 		return
 	}
 	var msg string
-	if r.Err != nil {
+	if r.Err != nil && gin.IsDebugging() {
 		l.Logger.Error(r.Err)
 		msg = r.Err.Error()
 	}

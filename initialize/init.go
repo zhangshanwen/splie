@@ -1,9 +1,9 @@
 package initialize
 
 import (
-	"github.com/zhangshanwen/the_one/initialize/conf"
-	"github.com/zhangshanwen/the_one/initialize/db"
-	"github.com/zhangshanwen/the_one/initialize/logger"
+	"github.com/zhangshanwen/splie/initialize/conf"
+	"github.com/zhangshanwen/splie/initialize/db"
+	"github.com/zhangshanwen/splie/initialize/logger"
 )
 
 func Initialize() {

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/zhangshanwen/the_one/initialize"
-	"github.com/zhangshanwen/the_one/router"
+	"github.com/zhangshanwen/splie/initialize"
+	"github.com/zhangshanwen/splie/router"
 )
 
 func main() {
